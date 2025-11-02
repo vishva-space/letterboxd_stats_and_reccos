@@ -1,0 +1,98 @@
+.App {
+  text-align: center;
+  background-color: #13171c;
+  height: -webkit-fill-available;
+}
+
+.App-header {
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.App-logo {
+  height: 100px;
+}
+
+.sub-heading {
+  color: white;
+}
+
+.App-main {
+  display: block;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.info-box-div {
+  justify-content: center;
+  display: flex;
+}
+
+.info-box {
+  background-color: #13171c; /* Soft background */
+  padding: 25px 40px;
+  max-width: 1000px;
+  border: 4px solid #ff6f61;
+  border-radius: 25px 5px 25px 5px; /* Curly-ish border */
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: left;
+  line-height: 1;
+  animation: fadeIn 1s ease-in-out;
+  color: aqua;
+}
+
+.info-box ul {
+  margin-left: 20px;
+}
+
+.info-box li {
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Centering everything below the info box */
+.input-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Input box styling */
+.username-input {
+  width: 500px;
+  padding: 15px 15px;
+  font-size: 16px;
+  border: 2px solid #ff6f61;
+  border-radius: 8px 0 0 8px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.username-input:focus {
+  border-color: #ff3b2f;
+}
+
+/* Button styling */
+.fetch-button {
+  padding: 10px 20px;
+  background-color: #ff6f61;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 0 8px 8px 0;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.fetch-button:hover {
+  background-color: #ff3b2f;
+}
