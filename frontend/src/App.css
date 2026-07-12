@@ -66,18 +66,20 @@
   margin-top: 20px;
 }
 
-/* Input box styling */
-.username-input {
+/* File input styling */
+.zip-input {
   width: 500px;
-  padding: 15px 15px;
+  padding: 12px 15px;
   font-size: 16px;
   border: 2px solid #ff6f61;
   border-radius: 8px 0 0 8px;
   outline: none;
   transition: border-color 0.3s;
+  background-color: white;
+  color: #333;
 }
 
-.username-input:focus {
+.zip-input:focus {
   border-color: #ff3b2f;
 }
 
