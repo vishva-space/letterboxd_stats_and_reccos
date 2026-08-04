@@ -3,6 +3,23 @@ import "./App.css";
 import logo from "./logo.webp"; // Place logo in src or public folder
 
 function App() {
+  const [selectedFile, setSelectedFile] = React.useState(null);
+  const fileInputRef = React.useRef(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+    }
+  };
+
+  const handleClearSelection = () => {
+    setSelectedFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -27,11 +44,32 @@ function App() {
         </div>
 
         <div className="input-section">
-          <input
-            type="file"
-            accept=".zip"
-            className="zip-input"
-          />
+          <div className="zip-input-wrapper">
+            <label className="zip-input-label" htmlFor="zip-upload">
+              <span className="zip-input-placeholder">
+                {selectedFile ? selectedFile.name : "Choose ZIP file..."}
+              </span>
+            </label>
+            <input
+              ref={fileInputRef}
+              id="zip-upload"
+              type="file"
+              accept=".zip"
+              aria-label="Upload ZIP file"
+              className="zip-input-hidden"
+              onChange={handleFileChange}
+            />
+            {selectedFile && (
+              <button
+                type="button"
+                className="zip-cancel-button"
+                onClick={handleClearSelection}
+                aria-label="Cancel selected ZIP file"
+              >
+                Cancel
+              </button>
+            )}
+          </div>
           <button className="fetch-button">Analyze ZIP</button>
         </div>
       </main>
