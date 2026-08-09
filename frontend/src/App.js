@@ -4,19 +4,55 @@ import logo from "./logo.webp"; // Place logo in src or public folder
 
 function App() {
   const [selectedFile, setSelectedFile] = React.useState(null);
+  const [statusMessage, setStatusMessage] = React.useState("");
+  const [isAnalyzing, setIsAnalyzing] = React.useState(false);
   const fileInputRef = React.useRef(null);
 
   const handleFileChange = (event) => {
     const file = event.target.files?.[0];
     if (file) {
       setSelectedFile(file);
+      setStatusMessage("");
     }
   };
 
   const handleClearSelection = () => {
     setSelectedFile(null);
+    setStatusMessage("");
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
+    }
+  };
+
+  const handleAnalyzeZip = async () => {
+    if (!selectedFile) {
+      setStatusMessage("Please choose a ZIP file first.");
+      return;
+    }
+
+    setIsAnalyzing(true);
+    setStatusMessage("");
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
+    try {
+      const response = await fetch("/analyze-zip", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.detail || "Unexpected upload error.");
+      }
+
+      // Keep the selected file name visible in the input after successful processing.
+      // Do not clear selectedFile so the label still shows the ZIP name.
+    } catch (error) {
+      setStatusMessage(`Error: ${error.message}`);
+    } finally {
+      setIsAnalyzing(false);
     }
   };
 
@@ -70,7 +106,15 @@ function App() {
               </button>
             )}
           </div>
-          <button className="fetch-button">Analyze ZIP</button>
+          <button
+            type="button"
+            className="fetch-button"
+            onClick={handleAnalyzeZip}
+            disabled={isAnalyzing}
+          >
+            {isAnalyzing ? "Analyzing..." : "Analyze ZIP"}
+          </button>
+          {statusMessage && <p className="status-message">{statusMessage}</p>}
         </div>
       </main>
     </div>
