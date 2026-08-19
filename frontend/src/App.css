@@ -1,7 +1,14 @@
 .App {
   text-align: center;
   background-color: #13171c;
-  height: -webkit-fill-available;
+  min-height: 100vh;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: #13171c;
+  color: white;
 }
 
 .App-header {
@@ -131,4 +138,224 @@
 
 .fetch-button:hover {
   background-color: #ff3b2f;
+}
+
+.status-message {
+  color: #ffd54a;
+  margin-top: 12px;
+  font-weight: 600;
+}
+
+.year-section {
+  margin-top: 24px;
+}
+
+.year-selector-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  color: white;
+}
+
+.year-selector-label {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.year-selector {
+  padding: 10px 14px;
+  border: 2px solid #ff6f61;
+  border-radius: 8px;
+  background-color: #1d232b;
+  color: white;
+  font-size: 1rem;
+  min-width: 180px;
+}
+
+.year-summary {
+  width: 70%;
+  max-width: 1200px;
+  margin: 30px auto 0;
+  background-color: #2f3b47;
+  padding: 28px 20px 36px;
+  border-radius: 18px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+}
+
+.year-summary-title {
+  margin: 0;
+  color: #dfeaf7;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.summary-by-numbers {
+  text-align: center;
+  margin-top: 16px;
+  margin-bottom: 24px;
+  color: #dfeaf7;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+
+.summary-cards {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.summary-card {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.08);
+}
+
+.top-rated-section {
+  margin-top: 40px;
+  background: #1d232b;
+  padding: 18px 16px 10px;
+  border-radius: 14px;
+}
+
+.top-rated-title {
+  color: #edf3ff;
+  text-align: center;
+  letter-spacing: 0.08em;
+  margin-bottom: 18px;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.top-rated-grid {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.top-rated-card {
+  width: 20%;
+  min-width: 140px;
+  text-align: center;
+  padding: 0 12px;
+  border-left: 1px solid #d9dde2;
+  box-sizing: border-box;
+}
+
+.top-rated-card:first-child {
+  border-left: none;
+}
+
+.top-rated-poster-wrap {
+  width: 100%;
+  height: 210px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+  background: linear-gradient(135deg, #1a2432, #273a4a 50%, #1b2938);
+  position: relative;
+}
+
+.top-rated-poster-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+}
+
+.top-rated-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.top-rated-poster-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  background: linear-gradient(135deg, rgba(44, 62, 87, 0.95), rgba(18, 24, 33, 0.85));
+  color: #edf3ff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-align: center;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.top-rated-hover-link {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background: rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.top-rated-poster-link:hover .top-rated-hover-link,
+.top-rated-poster-link:focus-visible .top-rated-hover-link {
+  opacity: 1;
+}
+
+.top-rated-stars {
+  margin-top: 10px;
+  color: #2dbb70;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.top-rated-film-title {
+  margin-top: 6px;
+  color: #edf3ff;
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.summary-card-orange {
+  background-color: #f58a2d;
+}
+
+.summary-card-green {
+  background-color: #2dbb70;
+}
+
+.summary-card-blue {
+  background-color: #2f8fd8;
+}
+
+.summary-number {
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.summary-label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.2;
+  max-width: 140px;
 }
