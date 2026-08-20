@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import logo from "./logo.webp"; // Place logo in src or public folder
+import MostWatchedWeekChart from './MostWatchedWeekChart';
 
 function App() {
   const [selectedFile, setSelectedFile] = React.useState(null);
@@ -11,6 +12,7 @@ function App() {
   const [summaryStats, setSummaryStats] = React.useState(null);
   const [profileName, setProfileName] = React.useState("Your");
   const [topRatedFilms, setTopRatedFilms] = React.useState([]);
+  const [weeklyCounts, setWeeklyCounts] = React.useState(null);
   const fileInputRef = React.useRef(null);
 
   const fetchYearSummary = React.useCallback(async (year) => {
@@ -31,6 +33,32 @@ function App() {
         rewatches: Number(result.rewatches_count || 0),
         watchedHours: Number(result.watched_hours || 0),
       });
+
+      // compute weekly counts (52 bins) from returned combined `data`
+      try {
+        const data = Array.isArray(result.data) ? result.data : [];
+        const yearInt = Number(year);
+        const weeks = new Array(52).fill(0);
+        const jan1 = new Date(`${year}-01-01T00:00:00`);
+        const dayMs = 24 * 60 * 60 * 1000;
+        data.forEach((rec) => {
+          // only count diary entries (ignore ratings and reviews)
+          if ((rec.source || '').toLowerCase() !== 'diary') return;
+          const dateStr = (rec.watched_date || rec.date || '').trim();
+          if (!dateStr) return;
+          const d = new Date(dateStr);
+          if (isNaN(d)) return;
+          if (d.getFullYear() !== yearInt) return;
+          const dayDiff = Math.floor((d - jan1) / dayMs);
+          let idx = Math.floor(dayDiff / 7);
+          if (idx < 0) idx = 0;
+          if (idx > 51) idx = 51;
+          weeks[idx] = (weeks[idx] || 0) + 1;
+        });
+        setWeeklyCounts(weeks);
+      } catch (err) {
+        setWeeklyCounts(null);
+      }
     } catch (error) {
       setStatusMessage(`Error: ${error.message}`);
       setSummaryStats(null);
@@ -254,6 +282,28 @@ function App() {
                     </div>
                   </div>
                 )}
+
+                        {/* render weekly chart below the Highly Rated section */}
+                        {weeklyCounts && (
+                          <div className="most-watched-section">
+                            <h3 className="top-rated-title">MOST WATCHED WEEK {selectedYear}</h3>
+                            <div className="most-watched-content">
+                              {(() => {
+                                const max = Math.max(...weeklyCounts);
+                                const highlightIndex = max > 0 ? weeklyCounts.indexOf(max) : null;
+                                let highlightLabel = '';
+                                if (highlightIndex !== null) {
+                                  const jan1 = new Date(`${selectedYear}-01-01T00:00:00`);
+                                  const start = new Date(jan1.getTime() + highlightIndex * 7 * 24 * 60 * 60 * 1000);
+                                  const end = new Date(start.getTime() + 6 * 24 * 60 * 60 * 1000);
+                                  const opts = { month: 'short', day: 'numeric' };
+                                  highlightLabel = `${start.toLocaleDateString(undefined, opts)}–${end.toLocaleDateString(undefined, opts)}`;
+                                }
+                                return <MostWatchedWeekChart weeks={weeklyCounts} highlightIndex={highlightIndex} highlightLabel={highlightLabel} year={selectedYear} />
+                              })()}
+                            </div>
+                          </div>
+                        )}
               </div>
             )}
           </div>
